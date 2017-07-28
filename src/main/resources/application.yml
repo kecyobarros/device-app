@@ -1,0 +1,18 @@
+server:
+  port: ${port:8080}
+  context-path: /device
+
+spring:
+  data:
+    mongodb:
+      database: device
+      host: localhost
+      port: 27017
+
+management:
+  security:
+    enabled: false
+
+endpoints:
+  shutdown:
+    enabled: false
