@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.io.Serializable;
 
 @Getter
-public class SystemOS implements Serializable{
+public class SystemOS implements Serializable {
 
     private String name;
 

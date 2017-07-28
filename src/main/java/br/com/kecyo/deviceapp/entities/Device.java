@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-@Document
 @Getter
-public class Device implements Serializable{
+@Document
+public class Device implements Serializable {
 
     @Id
     private String id;

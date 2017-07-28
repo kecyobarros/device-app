@@ -11,9 +11,9 @@ public class Venue implements Serializable {
 
     private String name;
 
-    private long longitude;
+    private double longitude;
 
-    private long latitude;
+    private double latitude;
 
     private int totalTime;
 
