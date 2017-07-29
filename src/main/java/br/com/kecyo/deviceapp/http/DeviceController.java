@@ -63,13 +63,13 @@ public class DeviceController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> create(@Valid @RequestBody final DeviceDataContract deviceDataContract,
-                                         UriComponentsBuilder uriComponentsBuilder) {
+                                         final UriComponentsBuilder uriComponentsBuilder) {
 
         log.info("Endpoint: create value={}", deviceDataContract);
         String id = deviceSave.save(deviceDataContract);
 
         UriComponents uriComponents =
-                uriComponentsBuilder.path(EndPointMapping.DEVICE.concat("{id}"))
+                uriComponentsBuilder.path(EndPointMapping.DEVICE.concat("/{id}"))
                                     .buildAndExpand(id);
 
         return ResponseEntity
