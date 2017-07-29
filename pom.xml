@@ -143,6 +143,10 @@
 											<minimum>1.00</minimum>
 										</limit>
 									</limits>
+									<excludes>
+										<exclude>br.com.kecyo.deviceapp.DeviceAppApplication</exclude>
+										<exclude>br.com.kecyo.deviceapp.config.*</exclude>
+									</excludes>
 								</rule>
 							</rules>
 						</configuration>
