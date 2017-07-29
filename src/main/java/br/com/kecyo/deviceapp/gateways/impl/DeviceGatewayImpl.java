@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -20,8 +21,8 @@ public class DeviceGatewayImpl implements DeviceGateway {
     }
 
     @Override
-    public Device findById(final String id) {
-        return repository.findOne(id);
+    public Optional<Device> findById(final String id) {
+        return Optional.ofNullable(repository.findOne(id));
     }
 
     @Override

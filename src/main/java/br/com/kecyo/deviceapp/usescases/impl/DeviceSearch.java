@@ -5,7 +5,7 @@ import br.com.kecyo.deviceapp.gateways.DeviceGateway;
 import br.com.kecyo.deviceapp.http.converter.DeviceConverter;
 import br.com.kecyo.deviceapp.http.converter.DeviceDataContractConverter;
 import br.com.kecyo.deviceapp.http.data.DeviceDataContract;
-import br.com.kecyo.deviceapp.usescases.Process;
+import br.com.kecyo.deviceapp.usescases.exception.DeviceNotFoundException;
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,16 +17,12 @@ import static org.springframework.util.StringUtils.isEmpty;
 
 @Component
 @RequiredArgsConstructor
-public class DeviceProcessImpl implements Process {
+public class DeviceSearch {
 
     private final DeviceGateway deviceGateway;
 
     private final DeviceDataContractConverter dataContractConverter;
 
-    private final DeviceConverter deviceConverter;
-
-
-    @Override
     public List<DeviceDataContract> findAll() {
         return deviceGateway
                         .findAll()
@@ -39,15 +35,13 @@ public class DeviceProcessImpl implements Process {
         return dataContractConverter.convert(device);
     }
 
-    @Override
     public DeviceDataContract findById(final String id) {
         Preconditions.checkArgument(!isEmpty(id), "Id is Required");
-        return convert(deviceGateway.findById(id));
+
+        final Device device = deviceGateway.findById(id)
+                                            .orElseThrow(DeviceNotFoundException::new);
+
+        return convert(device);
     }
 
-    @Override
-    public void save(final DeviceDataContract deviceDataContract) {
-        Preconditions.checkNotNull(deviceDataContract, "Device is Required");
-        deviceGateway.save(deviceConverter.convert(deviceDataContract));
-    }
 }

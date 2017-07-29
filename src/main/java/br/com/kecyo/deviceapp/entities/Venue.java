@@ -1,10 +1,12 @@
 package br.com.kecyo.deviceapp.entities;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.io.Serializable;
 
 @Getter
+@Builder
 public class Venue implements Serializable {
 
     private String categorie;

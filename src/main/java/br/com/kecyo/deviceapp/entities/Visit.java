@@ -1,11 +1,13 @@
 package br.com.kecyo.deviceapp.entities;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 public class Visit implements Serializable {
 
     private int batteryState;
