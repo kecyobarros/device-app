@@ -1,0 +1,31 @@
+{
+  "appsInstalled": [
+    "facebook",
+    "uber"
+  ],
+  "model": "Iphone",
+  "visits": [
+    {
+      "arrival": "2017-07-29T02:43:16.657",
+      "batteryPercentage": 10,
+      "batteryState": 10,
+      "departure": "2017-07-29T02:43:16.657",
+      "venue": {
+        "address": "Rua Doutor Plinio Barreto",
+        "categorie": "Rua",
+        "city": "São Paulo",
+        "country": "São Paulo",
+        "latitude": 1111,
+        "longitude": 11111,
+        "name": "Kecyo 2",
+        "precision": 0,
+        "state": "teste",
+        "totalTime": 1
+      }
+    }
+  ],
+  "systemOS": {
+    "name": "IPhoneOS",
+    "version": "10"
+  }
+}
