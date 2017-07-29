@@ -21,7 +21,7 @@ public class DeviceSave {
     public String save(final DeviceDataContract deviceDataContract) {
         log.info("save: {}", deviceDataContract);
 
-        Preconditions.checkNotNull(deviceDataContract, "Device is Required");
+        Preconditions.checkArgument(deviceDataContract != null, "Device is Required");
 
         final Device device = deviceConverter.convert(deviceDataContract);
 

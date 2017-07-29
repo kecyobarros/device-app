@@ -1,5 +1,6 @@
 package br.com.kecyo.deviceapp.entities;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
@@ -10,9 +11,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-@Document(collection = "devices")
 @Getter
+@Builder
 @ToString
+@Document(collection = "devices")
 public class Device implements Serializable {
 
     @Id
