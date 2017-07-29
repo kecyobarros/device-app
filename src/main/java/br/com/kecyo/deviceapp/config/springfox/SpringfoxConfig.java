@@ -35,6 +35,7 @@ public class SpringfoxConfig {
                 .useDefaultResponseMessages(false)
                 .globalResponseMessage(RequestMethod.POST, defaultErrorsMessage())
                 .globalResponseMessage(RequestMethod.PUT, defaultErrorsMessage())
+                .globalResponseMessage(RequestMethod.GET, defaultErrorsMessage())
                 .apiInfo(apiInfo());
     }
 
