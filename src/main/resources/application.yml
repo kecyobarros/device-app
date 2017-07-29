@@ -5,7 +5,7 @@ server:
 spring:
   data:
     mongodb:
-      database: device
+      database: deviceCollection
       host: localhost
       port: 27017
   jackson:
