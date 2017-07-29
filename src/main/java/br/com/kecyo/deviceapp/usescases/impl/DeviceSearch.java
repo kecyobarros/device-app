@@ -8,6 +8,7 @@ import br.com.kecyo.deviceapp.http.data.DeviceDataContract;
 import br.com.kecyo.deviceapp.usescases.exception.DeviceNotFoundException;
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DeviceSearch {
@@ -24,6 +26,7 @@ public class DeviceSearch {
     private final DeviceDataContractConverter dataContractConverter;
 
     public List<DeviceDataContract> findAll() {
+        log.info("Search FindAll");
         return deviceGateway
                         .findAll()
                         .stream()
@@ -36,6 +39,8 @@ public class DeviceSearch {
     }
 
     public DeviceDataContract findById(final String id) {
+        log.info("Search FindById: {}", id);
+
         Preconditions.checkArgument(!isEmpty(id), "Id is Required");
 
         final Device device = deviceGateway.findById(id)
