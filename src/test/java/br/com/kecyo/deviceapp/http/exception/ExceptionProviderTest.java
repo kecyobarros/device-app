@@ -3,8 +3,16 @@ package br.com.kecyo.deviceapp.http.exception;
 import br.com.kecyo.deviceapp.usescases.exception.DeviceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.BindingResultUtils;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.util.HashMap;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -24,6 +32,13 @@ public class ExceptionProviderTest {
         ResponseEntity<String> response = exceptionProvider.resourceDeviceNotFound(new DeviceNotFoundException());
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.NOT_FOUND)));
         assertThat(response.getBody(), is(equalTo("Device Not Found!")));
+    }
+
+    @Test
+    public void testMethodArgumentNotValidException(){
+        ResponseEntity<String> response = exceptionProvider
+                .resourceMethodArgumentNotValidException(Mockito.mock(MethodArgumentNotValidException.class));
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.BAD_REQUEST)));
     }
 
     @Test
