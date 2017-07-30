@@ -55,7 +55,7 @@ public class SpringfoxConfig {
                 .title("Device API")
                 .description("API provides information devices.")
                 .version("1.0")
-                .contact(new Contact("Kecyo", null, "kecyobarros@gmail.com"))
+                .contact(new Contact("Kecyo Barros", null, "kecyobarros@gmail.com"))
                 .build();
     }
 
