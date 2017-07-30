@@ -48,8 +48,8 @@ public class DeviceController {
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/{id}")
-    public ResponseEntity<DeviceDataContract> findByNameAndResolution(@PathVariable("id") final String id) {
-        log.info("Endpoint: findByNameAndResolution id={}", id);
+    public ResponseEntity<DeviceDataContract> findById(@PathVariable("id") final String id) {
+        log.info("Endpoint: findById id={}", id);
 
         final DeviceDataContract device = deviceSearch.findById(id);
         return ResponseEntity.ok(device);
