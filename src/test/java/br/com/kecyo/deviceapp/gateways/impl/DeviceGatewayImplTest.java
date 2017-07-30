@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -29,8 +30,8 @@ public class DeviceGatewayImplTest {
 
     @Test
     public void testFindAll(){
-        deviceGateway.findAll();
-        verify(repository, times(1)).findAll();
+        deviceGateway.findAll(1);
+        verify(repository, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

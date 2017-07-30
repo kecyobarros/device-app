@@ -2,17 +2,14 @@ package br.com.kecyo.deviceapp.usescases.impl;
 
 import br.com.kecyo.deviceapp.entities.Device;
 import br.com.kecyo.deviceapp.gateways.DeviceGateway;
-import br.com.kecyo.deviceapp.http.converter.DeviceConverter;
 import br.com.kecyo.deviceapp.http.converter.DeviceDataContractConverter;
 import br.com.kecyo.deviceapp.http.data.DeviceDataContract;
 import br.com.kecyo.deviceapp.usescases.exception.DeviceNotFoundException;
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
@@ -25,13 +22,11 @@ public class DeviceSearch {
 
     private final DeviceDataContractConverter dataContractConverter;
 
-    public List<DeviceDataContract> findAll() {
+    public Page<DeviceDataContract> findAll(int page) {
         log.info("Search FindAll");
         return deviceGateway
-                        .findAll()
-                        .stream()
-                        .map(this::convert)
-                        .collect(Collectors.toList());
+                        .findAll(page)
+                        .map(this::convert);
     }
 
     private DeviceDataContract convert(final Device device){

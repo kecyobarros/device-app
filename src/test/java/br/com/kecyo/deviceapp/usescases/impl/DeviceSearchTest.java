@@ -5,12 +5,14 @@ import br.com.kecyo.deviceapp.gateways.DeviceGateway;
 import br.com.kecyo.deviceapp.http.converter.DeviceDataContractConverter;
 import br.com.kecyo.deviceapp.http.data.DeviceDataContract;
 import br.com.kecyo.deviceapp.usescases.exception.DeviceNotFoundException;
-import br.com.kecyo.deviceapp.util.ObjectMapperConfig;
+import br.com.kecyo.deviceapp.utils.ObjectMapperConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,10 +23,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.kecyo.deviceapp.util.asserts.AssertDeviceDataContract.assertDeviceDataContract;
+import static br.com.kecyo.deviceapp.utils.asserts.AssertDeviceDataContract.assertDeviceDataContract;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -47,24 +52,30 @@ public class DeviceSearchTest {
 
     @Test
     public void findAllSuccess() throws IOException, URISyntaxException {
-        when(deviceGateway.findAll()).thenReturn(Collections.singletonList(Device.builder().build()));
+        when(deviceGateway.findAll(anyInt())).thenReturn(
+                new PageImpl<Device>(Collections.singletonList(Device.builder().build())));
+
         when(dataContractConverter.convert(any(Device.class)))
                 .thenReturn(createDeviceDataContract());
 
-        List<DeviceDataContract> result = deviceSearch.findAll();
+        Page<DeviceDataContract> result = deviceSearch.findAll(1);
 
-        assertThat(result, hasSize(1));
+        assertThat(result.getContent(), hasSize(1));
+        assertThat(result.getTotalPages(), is(equalTo(1)));
+        assertThat(result.getTotalElements(), is(equalTo(1L)));
 
-        DeviceDataContract deviceDataContractResult = result.get(0);
+        DeviceDataContract deviceDataContractResult = result.getContent().get(0);
 
         assertDeviceDataContract(deviceDataContractResult);
     }
 
     @Test
     public void findAllIsEmpty(){
-        when(deviceGateway.findAll()).thenReturn(Collections.emptyList());
-        List<DeviceDataContract> result = deviceSearch.findAll();
-        assertThat(result, hasSize(0));
+        when(deviceGateway.findAll(anyInt())).thenReturn(new PageImpl<Device>(Collections.emptyList()));
+        Page<DeviceDataContract> result = deviceSearch.findAll(0);
+        assertThat(result.getContent(), hasSize(0));
+        assertThat(result.getTotalPages(), is(equalTo(1)));
+        assertThat(result.getTotalElements(), is(equalTo(0L)));
     }
 
     @Test

@@ -2,7 +2,7 @@ package br.com.kecyo.deviceapp.http.converter;
 
 import br.com.kecyo.deviceapp.entities.Device;
 import br.com.kecyo.deviceapp.http.data.DeviceDataContract;
-import br.com.kecyo.deviceapp.util.ObjectMapperConfig;
+import br.com.kecyo.deviceapp.utils.ObjectMapperConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
 import org.junit.Before;
@@ -14,7 +14,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 
-import static br.com.kecyo.deviceapp.util.asserts.AssertDevice.assertDevice;
+import static br.com.kecyo.deviceapp.utils.asserts.AssertDevice.assertDevice;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;

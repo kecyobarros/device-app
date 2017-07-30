@@ -4,15 +4,23 @@
     "uber"
   ],
   "model": "Iphone",
+  "home": {
+    "longitude": 10,
+    "latitude": 20
+  },
+  "work": {
+    "longitude": 340,
+    "latitude": 40
+  },
   "visits": [
     {
       "arrival": "2017-07-29T02:43:16.657",
       "batteryPercentage": 10,
       "batteryState": 10,
       "departure": "2017-07-29T02:43:16.657",
+      "categorie": "Rua",
       "venue": {
         "address": "Rua Doutor Plinio Barreto",
-        "categorie": "Rua",
         "city": "São Paulo",
         "country": "São Paulo",
         "latitude": 1111,

@@ -2,12 +2,13 @@ package br.com.kecyo.deviceapp.http;
 
 import br.com.kecyo.deviceapp.http.data.DeviceDataContract;
 import br.com.kecyo.deviceapp.usescases.exception.DeviceNotFoundException;
-import br.com.kecyo.deviceapp.util.ObjectMapperConfig;
-import br.com.kecyo.deviceapp.util.WebMvcTestBase;
+import br.com.kecyo.deviceapp.utils.ObjectMapperConfig;
+import br.com.kecyo.deviceapp.utils.WebMvcTestBase;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -16,11 +17,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
+import java.util.Collections;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -34,29 +34,30 @@ public class DeviceControllerTest extends WebMvcTestBase {
 
     @Test
     public void endpointDeviceFindAll() throws Exception {
-        given(deviceSearch.findAll()).willReturn(Arrays.asList(createDeviceDataContract()));
+        given(deviceSearch.findAll(anyInt())).willReturn(
+                new PageImpl<DeviceDataContract>(Collections.singletonList(createDeviceDataContract())));
 
-        mvc.perform(get(EndPointMapping.DEVICE))
+        mvc.perform(get(EndPointMapping.DEVICE+"/{page}",1))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].model").value("Iphone"))
-                .andExpect(jsonPath("$.[0].systemOS.name").value("IPhoneOS"))
-                .andExpect(jsonPath("$.[0].systemOS.version").value("10"))
-                .andExpect(jsonPath("$.[0].appsInstalled.[0]").value("facebook"))
-                .andExpect(jsonPath("$.[0].appsInstalled.[1]").value("uber"))
-                .andExpect(jsonPath("$.[0].visits.[0].batteryPercentage").value(10))
-                .andExpect(jsonPath("$.[0].visits.[0].batteryState").value(10))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.address").value("Rua Doutor Plinio Barreto"))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.categorie").value("Rua"))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.city").value("São Paulo"))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.country").value("São Paulo"))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.latitude").value(1111))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.longitude").value(11111))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.name").value("Kecyo 2"))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.precision").value(0))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.state").value("teste"))
-                .andExpect(jsonPath("$.[0].visits.[0].venue.totalTime").value(1))
-                .andExpect(jsonPath("$.[0].visits.[0].arrival").value("2017-07-29T02:43:16.657"))
-                .andExpect(jsonPath("$.[0].visits.[0].departure").value("2017-07-29T02:43:16.657"));
+                .andExpect(jsonPath("$.content.[0].model").value("Iphone"))
+                .andExpect(jsonPath("$.content.[0].systemOS.name").value("IPhoneOS"))
+                .andExpect(jsonPath("$.content.[0].systemOS.version").value("10"))
+                .andExpect(jsonPath("$.content.[0].appsInstalled.[0]").value("facebook"))
+                .andExpect(jsonPath("$.content.[0].appsInstalled.[1]").value("uber"))
+                .andExpect(jsonPath("$.content.[0].visits.[0].batteryPercentage").value(10))
+                .andExpect(jsonPath("$.content.[0].visits.[0].batteryState").value(10))
+                .andExpect(jsonPath("$.content.[0].visits.[0].categorie").value("Rua"))
+                .andExpect(jsonPath("$.content.[0].visits.[0].venue.address").value("Rua Doutor Plinio Barreto"))
+                .andExpect(jsonPath("$.content.[0].visits.[0].venue.city").value("São Paulo"))
+                .andExpect(jsonPath("$.content.[0].visits.[0].venue.country").value("São Paulo"))
+                .andExpect(jsonPath("$.content.[0].visits.[0].venue.latitude").value(1111))
+                .andExpect(jsonPath("$.content.[0].visits.[0].venue.longitude").value(11111))
+                .andExpect(jsonPath("$.content.[0].visits.[0].venue.name").value("Kecyo 2"))
+                .andExpect(jsonPath("$.content.[0].visits.[0].venue.precision").value(0))
+                .andExpect(jsonPath("$.content.[0].visits.[0].venue.state").value("teste"))
+                .andExpect(jsonPath("$.content.[0].visits.[0].venue.totalTime").value(1))
+                .andExpect(jsonPath("$.content.[0].visits.[0].arrival").value("2017-07-29T02:43:16.657"))
+                .andExpect(jsonPath("$.content.[0].visits.[0].departure").value("2017-07-29T02:43:16.657"));
 
     }
 
@@ -64,7 +65,7 @@ public class DeviceControllerTest extends WebMvcTestBase {
     public void endpointDeviceFindById() throws Exception {
         given(deviceSearch.findById(anyString())).willReturn(createDeviceDataContract());
 
-        mvc.perform(get(EndPointMapping.DEVICE+"/{id}", "1"))
+        mvc.perform(get(EndPointMapping.DEVICE+"/id/{id}", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.model").value("Iphone"))
                 .andExpect(jsonPath("$.systemOS.name").value("IPhoneOS"))
@@ -73,8 +74,8 @@ public class DeviceControllerTest extends WebMvcTestBase {
                 .andExpect(jsonPath("$.appsInstalled.[1]").value("uber"))
                 .andExpect(jsonPath("$.visits.[0].batteryPercentage").value(10))
                 .andExpect(jsonPath("$.visits.[0].batteryState").value(10))
+                .andExpect(jsonPath("$.visits.[0].categorie").value("Rua"))
                 .andExpect(jsonPath("$.visits.[0].venue.address").value("Rua Doutor Plinio Barreto"))
-                .andExpect(jsonPath("$.visits.[0].venue.categorie").value("Rua"))
                 .andExpect(jsonPath("$.visits.[0].venue.city").value("São Paulo"))
                 .andExpect(jsonPath("$.visits.[0].venue.country").value("São Paulo"))
                 .andExpect(jsonPath("$.visits.[0].venue.latitude").value(1111))
@@ -92,7 +93,7 @@ public class DeviceControllerTest extends WebMvcTestBase {
     public void endpointDeviceFindByIdNotFound() throws Exception {
         given(deviceSearch.findById(anyString())).willThrow(new DeviceNotFoundException());
 
-        mvc.perform(get(EndPointMapping.DEVICE+"/{id}", "1"))
+        mvc.perform(get(EndPointMapping.DEVICE+"/id/{id}", "1"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string("Device Not Found!"));
 
@@ -101,7 +102,7 @@ public class DeviceControllerTest extends WebMvcTestBase {
     @Test
     public void endpointDeviceFindByIdInternalServerError() throws Exception {
         given(deviceSearch.findById(anyString())).willThrow(new RuntimeException());
-        mvc.perform(get(EndPointMapping.DEVICE+"/{id}", "1"))
+        mvc.perform(get(EndPointMapping.DEVICE+"/id/{id}", "1"))
                 .andExpect(status().isInternalServerError());
 
     }
@@ -114,7 +115,7 @@ public class DeviceControllerTest extends WebMvcTestBase {
                 .content(getJson()))
                 .andExpect(status().isCreated())
                 .andExpect(content().string("12312312321"))
-                .andExpect(redirectedUrl("http://localhost/api/devices/12312312321"));
+                .andExpect(redirectedUrl("http://localhost/device/id/12312312321"));
     }
 
     @Test

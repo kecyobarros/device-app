@@ -5,6 +5,8 @@ import br.com.kecyo.deviceapp.gateways.DeviceGateway;
 import br.com.kecyo.deviceapp.gateways.repository.mongo.DeviceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,9 +20,9 @@ public class DeviceGatewayImpl implements DeviceGateway {
     private final DeviceRepository repository;
 
     @Override
-    public List<Device> findAll() {
+    public Page<Device> findAll(int page) {
         log.info("Gateway FindAll");
-        return repository.findAll();
+        return repository.findAll(new PageRequest(page, 500));
     }
 
     @Override
