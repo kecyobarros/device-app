@@ -22,6 +22,10 @@ public class Device implements Serializable {
 
     private SystemOS systemOS;
 
+    private Home home;
+
+    private Work work;
+
     private String model;
 
     private Set<String> appsInstalled;

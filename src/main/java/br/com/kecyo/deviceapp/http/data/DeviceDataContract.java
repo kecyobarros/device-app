@@ -22,6 +22,10 @@ public class DeviceDataContract implements Serializable {
     @Valid
     private SystemOSDataContract systemOS;
 
+    private HomeDataContract home;
+
+    private WorkDataContract work;
+
     @ApiModelProperty(required = true)
     @NotEmpty
     private String model;

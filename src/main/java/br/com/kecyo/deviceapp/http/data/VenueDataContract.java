@@ -15,10 +15,6 @@ public class VenueDataContract implements Serializable {
 
     @ApiModelProperty(required = true)
     @NotEmpty
-    private String categorie;
-
-    @ApiModelProperty(required = true)
-    @NotEmpty
     private String name;
 
     @ApiModelProperty(required = true)

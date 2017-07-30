@@ -20,6 +20,8 @@ public class Visit implements Serializable {
 
     private LocalDateTime departure;
 
+    private String categorie;
+
     private Venue venue;
 
 }

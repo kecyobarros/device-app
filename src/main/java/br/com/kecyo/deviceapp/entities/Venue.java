@@ -11,8 +11,6 @@ import java.io.Serializable;
 @ToString
 public class Venue implements Serializable {
 
-    private String categorie;
-
     private String name;
 
     private double longitude;

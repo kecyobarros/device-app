@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
@@ -34,6 +35,10 @@ public class VisitDataContract implements Serializable {
     @NotNull
     @ApiModelProperty(required = true, example = "2017-07-29T02:43:16.657")
     private LocalDateTime departure;
+
+    @ApiModelProperty(required = true)
+    @NotEmpty
+    private String categorie;
 
     @Valid
     private VenueDataContract venue;
