@@ -1,4 +1,4 @@
-package br.com.kecyo.deviceapp.util;
+package br.com.kecyo.deviceapp.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;

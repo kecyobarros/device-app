@@ -1,9 +1,6 @@
-package br.com.kecyo.deviceapp.util.asserts;
+package br.com.kecyo.deviceapp.utils.asserts;
 
-import br.com.kecyo.deviceapp.entities.Device;
-import br.com.kecyo.deviceapp.entities.SystemOS;
-import br.com.kecyo.deviceapp.entities.Venue;
-import br.com.kecyo.deviceapp.entities.Visit;
+import br.com.kecyo.deviceapp.entities.*;
 
 import java.util.Set;
 
@@ -16,6 +13,8 @@ public class AssertDevice {
         assertThat(device.getId(), is(nullValue()));
         assertThat(device.getModel(), is(equalTo("Iphone")));
         assertSystemOS(device.getSystemOS());
+        assertHome(device.getHome());
+        assertWork(device.getWork());
         assertVisits(device.getVisits().get(0));
         assertAppInstalled(device.getAppsInstalled());
     }
@@ -32,19 +31,31 @@ public class AssertDevice {
         assertThat(systemOS.getVersion(), is(equalTo("10")));
     }
 
+    private static void assertHome(final Home home){
+        assertThat(home, is(notNullValue()));
+        assertThat(home.getLongitude(), is(equalTo(10D)));
+        assertThat(home.getLatitude(), is(equalTo(20D)));
+    }
+
+    private static void assertWork(final Work work){
+        assertThat(work, is(notNullValue()));
+        assertThat(work.getLongitude(), is(equalTo(340D)));
+        assertThat(work.getLatitude(), is(equalTo(40D)));
+    }
+
     private static void assertVisits(final Visit visit){
         assertThat(visit, is(notNullValue()));
         assertThat(visit.getArrival().toString(), is(equalTo("2017-07-29T02:43:16.657")));
         assertThat(visit.getBatteryPercentage(), is(equalTo(10)));
         assertThat(visit.getBatteryState(), is(equalTo(10)));
         assertThat(visit.getDeparture().toString(), is(equalTo("2017-07-29T02:43:16.657")));
+        assertThat(visit.getCategorie(), is(equalTo("Rua")));
         assertVenue(visit.getVenue());
     }
 
     private static void assertVenue(final Venue venue){
         assertThat(venue, is(notNullValue()));
         assertThat(venue.getAddress(), is(equalTo("Rua Doutor Plinio Barreto")));
-        assertThat(venue.getCategorie(), is(equalTo("Rua")));
         assertThat(venue.getCity(), is(equalTo("São Paulo")));
         assertThat(venue.getCountry(), is(equalTo("São Paulo")));
         assertThat(venue.getLatitude(), is(equalTo(1111D)));

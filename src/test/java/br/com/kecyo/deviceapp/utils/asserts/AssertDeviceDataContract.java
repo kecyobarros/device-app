@@ -1,9 +1,6 @@
-package br.com.kecyo.deviceapp.util.asserts;
+package br.com.kecyo.deviceapp.utils.asserts;
 
-import br.com.kecyo.deviceapp.http.data.DeviceDataContract;
-import br.com.kecyo.deviceapp.http.data.SystemOSDataContract;
-import br.com.kecyo.deviceapp.http.data.VenueDataContract;
-import br.com.kecyo.deviceapp.http.data.VisitDataContract;
+import br.com.kecyo.deviceapp.http.data.*;
 
 import java.util.Set;
 
@@ -14,6 +11,8 @@ public class AssertDeviceDataContract {
 
     public static void assertDeviceDataContract(final DeviceDataContract deviceDataContract){
         assertThat(deviceDataContract.getModel(), is(equalTo("Iphone")));
+        assertHomeDataContract(deviceDataContract.getHome());
+        assertWorkDataContract(deviceDataContract.getWork());
         assertSystemOSDataContract(deviceDataContract.getSystemOS());
         assertVisitsDataContract(deviceDataContract.getVisits().get(0));
         assertAppInstalled(deviceDataContract.getAppsInstalled());
@@ -23,6 +22,18 @@ public class AssertDeviceDataContract {
         assertThat(appInstalled, is(notNullValue()));
         assertThat(appInstalled, hasSize(2));
         assertThat(appInstalled, hasItems("facebook", "uber"));
+    }
+
+    private static void assertHomeDataContract(final HomeDataContract homeDataContract){
+        assertThat(homeDataContract, is(notNullValue()));
+        assertThat(homeDataContract.getLongitude(), is(equalTo(10D)));
+        assertThat(homeDataContract.getLatitude(), is(equalTo(20D)));
+    }
+
+    private static void assertWorkDataContract(final WorkDataContract workDataContract){
+        assertThat(workDataContract, is(notNullValue()));
+        assertThat(workDataContract.getLongitude(), is(equalTo(340D)));
+        assertThat(workDataContract.getLatitude(), is(equalTo(40D)));
     }
 
     private static void assertSystemOSDataContract(final SystemOSDataContract systemOSDataContract){
@@ -37,13 +48,13 @@ public class AssertDeviceDataContract {
         assertThat(visitDataContract.getBatteryPercentage(), is(equalTo(10)));
         assertThat(visitDataContract.getBatteryState(), is(equalTo(10)));
         assertThat(visitDataContract.getDeparture().toString(), is(equalTo("2017-07-29T02:43:16.657")));
+        assertThat(visitDataContract.getCategorie(), is(equalTo("Rua")));
         assertVenueDataContract(visitDataContract.getVenue());
     }
 
     private static void assertVenueDataContract(final VenueDataContract venueDataContract){
         assertThat(venueDataContract, is(notNullValue()));
         assertThat(venueDataContract.getAddress(), is(equalTo("Rua Doutor Plinio Barreto")));
-        assertThat(venueDataContract.getCategorie(), is(equalTo("Rua")));
         assertThat(venueDataContract.getCity(), is(equalTo("São Paulo")));
         assertThat(venueDataContract.getCountry(), is(equalTo("São Paulo")));
         assertThat(venueDataContract.getLatitude(), is(equalTo(1111D)));
