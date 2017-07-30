@@ -1,15 +1,6 @@
-server:
-  port: ${port:8080}
-  context-path: /device
-
 spring:
   profiles:
-    active: dev
-  data:
-    mongodb:
-      database: deviceCollection
-      host: localhost
-      port: 27017
+    active: test
   jackson:
     default-property-inclusion: non_null
     deserialization:
@@ -22,11 +13,3 @@ spring:
       ACCEPT_CASE_INSENSITIVE_PROPERTIES: true
     parser:
       ALLOW_COMMENTS: true
-
-management:
-  security:
-    enabled: false
-
-endpoints:
-  shutdown:
-    enabled: false
