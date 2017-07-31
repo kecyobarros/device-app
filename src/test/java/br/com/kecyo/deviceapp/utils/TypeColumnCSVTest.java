@@ -17,8 +17,8 @@ public class TypeColumnCSVTest {
 
     @Test
     public void testValidIndex(){
-        assertThat(TypeColumnCSV.INDEX_DEVICE_ID.getIndex(), is(0));
-        assertThat(TypeColumnCSV.INDEX_ID_USER.getIndex(), is(1));
+        assertThat(TypeColumnCSV.INDEX_ID_USER.getIndex(), is(0));
+        assertThat(TypeColumnCSV.INDEX_DEVICE_ID.getIndex(), is(1));
         assertThat(TypeColumnCSV.INDEX_OS_NAME.getIndex(), is(2));
         assertThat(TypeColumnCSV.INDEX_OS_VERSION.getIndex(), is(3));
         assertThat(TypeColumnCSV.INDEX_DEVICE_MODEL.getIndex(), is(4));

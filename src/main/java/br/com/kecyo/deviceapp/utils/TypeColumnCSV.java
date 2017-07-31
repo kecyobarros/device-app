@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 public enum TypeColumnCSV {
 
 
-    INDEX_DEVICE_ID(0, String.class),
-    INDEX_ID_USER(1, String.class),
+    INDEX_ID_USER(0, String.class),
+    INDEX_DEVICE_ID(1, String.class),
     INDEX_OS_NAME(2, String.class),
     INDEX_OS_VERSION(3, String.class),
     INDEX_DEVICE_MODEL(4, String.class),

@@ -2,9 +2,13 @@ package br.com.kecyo.deviceapp.utils;
 
 import br.com.kecyo.deviceapp.entities.*;
 import com.google.common.collect.Sets;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +16,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Service
 public class ExtractorCSV {
 
     private String[] columns;
@@ -36,9 +41,7 @@ public class ExtractorCSV {
     public Map<String, Optional<Device>> execute() throws URISyntaxException, IOException {
 
         Map<String, Optional<Device>> collect;
-
-        final File inputF = new File(ExtractorCSV.class.getResource("/load/loadDevices.csv").toURI());
-        final  InputStream inputFS = new FileInputStream(inputF);
+        final InputStream inputFS = this.getClass().getResourceAsStream("/load/loadDevices.csv");
         final BufferedReader br = new BufferedReader(new InputStreamReader(inputFS));
 
         collect = br.lines()

@@ -5,7 +5,6 @@ import br.com.kecyo.deviceapp.utils.ExtractorCSV;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,7 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 
 @ChangeLog
-@Service
 public class MigrationMongoDB {
 
     @ChangeSet(order = "001", id = "initLoad", author = "Kecyo")
