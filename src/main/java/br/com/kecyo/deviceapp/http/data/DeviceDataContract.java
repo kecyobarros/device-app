@@ -19,6 +19,9 @@ public class DeviceDataContract implements Serializable {
     @ApiModelProperty(hidden = true)
     private String id;
 
+    @ApiModelProperty(required = true)
+    private String userId;
+
     @Valid
     private SystemOSDataContract systemOS;
 

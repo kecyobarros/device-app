@@ -34,7 +34,7 @@ public class DeviceDataContractConverterTest {
 
     @Test
     public void testToStringBuilder(){
-        assertThat(Device.builder().toString(), is(equalTo("Device.DeviceBuilder(id=null, systemOS=null, home=null, work=null, model=null, appsInstalled=null, visits=null, version=0)")));
+        assertThat(Device.builder().toString(), is(equalTo("Device.DeviceBuilder(id=null, userId=null, systemOS=null, home=null, work=null, model=null, appsInstalled=null, visits=null, version=0)")));
         assertThat(Visit.builder().toString(), is(equalTo("Visit.VisitBuilder(batteryState=0, batteryPercentage=0, arrival=null, departure=null, categorie=null, venue=null)")));
         assertThat(Venue.builder().toString(), is(equalTo("Venue.VenueBuilder(name=null, longitude=0.0, latitude=0.0, totalTime=0, precision=0, address=null, city=null, state=null, country=null)")));
     }
@@ -42,6 +42,7 @@ public class DeviceDataContractConverterTest {
     private Device createDevice(){
         return Device.builder()
                         .id("12331212")
+                        .userId("12312312321")
                         .model("Iphone")
                         .appsInstalled(Sets.newHashSet("facebook", "uber"))
                         .visits(createListVisit())

@@ -11,6 +11,7 @@ public class AssertDeviceDataContract {
 
     public static void assertDeviceDataContract(final DeviceDataContract deviceDataContract){
         assertThat(deviceDataContract.getModel(), is(equalTo("Iphone")));
+        assertThat(deviceDataContract.getUserId(), is(equalTo("12312312321")));
         assertHomeDataContract(deviceDataContract.getHome());
         assertWorkDataContract(deviceDataContract.getWork());
         assertSystemOSDataContract(deviceDataContract.getSystemOS());

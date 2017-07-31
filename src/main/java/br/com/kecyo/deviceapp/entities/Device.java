@@ -20,6 +20,8 @@ public class Device implements Serializable {
     @Id
     private String id;
 
+    private String userId;
+
     private SystemOS systemOS;
 
     private Home home;

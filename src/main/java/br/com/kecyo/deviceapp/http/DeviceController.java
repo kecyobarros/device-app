@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -53,6 +54,21 @@ public class DeviceController {
         log.info("Endpoint: findById id={}", id);
 
         final DeviceDataContract device = deviceSearch.findById(id);
+        return ResponseEntity.ok(device);
+    }
+
+    @ApiOperation(value = "Request Device by userId")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Device found!"),
+            @ApiResponse(code = 404, message = "Device not found!")
+    })
+    @RequestMapping(method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/user/{id}")
+    public ResponseEntity<List<DeviceDataContract>> findByUserId(@PathVariable("id") final String userId) {
+        log.info("Endpoint: findByUserId id={}", userId);
+
+        final List<DeviceDataContract> device = deviceSearch.findByUserId(userId);
         return ResponseEntity.ok(device);
     }
 

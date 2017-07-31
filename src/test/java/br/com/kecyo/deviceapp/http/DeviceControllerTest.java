@@ -90,10 +90,49 @@ public class DeviceControllerTest extends WebMvcTestBase {
     }
 
     @Test
+    public void endpointDeviceFindByUserId() throws Exception {
+        given(deviceSearch.findByUserId(anyString()))
+                .willReturn(Collections.singletonList(createDeviceDataContract()));
+
+        mvc.perform(get(EndPointMapping.DEVICE+"/user/{id}", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].model").value("Iphone"))
+                .andExpect(jsonPath("$.[0].systemOS.name").value("IPhoneOS"))
+                .andExpect(jsonPath("$.[0].systemOS.version").value("10"))
+                .andExpect(jsonPath("$.[0].appsInstalled.[0]").value("facebook"))
+                .andExpect(jsonPath("$.[0].appsInstalled.[1]").value("uber"))
+                .andExpect(jsonPath("$.[0].visits.[0].batteryPercentage").value(10))
+                .andExpect(jsonPath("$.[0].visits.[0].batteryState").value(10))
+                .andExpect(jsonPath("$.[0].visits.[0].categorie").value("Rua"))
+                .andExpect(jsonPath("$.[0].visits.[0].venue.address").value("Rua Doutor Plinio Barreto"))
+                .andExpect(jsonPath("$.[0].visits.[0].venue.city").value("São Paulo"))
+                .andExpect(jsonPath("$.[0].visits.[0].venue.country").value("São Paulo"))
+                .andExpect(jsonPath("$.[0].visits.[0].venue.latitude").value(1111))
+                .andExpect(jsonPath("$.[0].visits.[0].venue.longitude").value(11111))
+                .andExpect(jsonPath("$.[0].visits.[0].venue.name").value("Kecyo 2"))
+                .andExpect(jsonPath("$.[0].visits.[0].venue.precision").value(0))
+                .andExpect(jsonPath("$.[0].visits.[0].venue.state").value("teste"))
+                .andExpect(jsonPath("$.[0].visits.[0].venue.totalTime").value(1))
+                .andExpect(jsonPath("$.[0].visits.[0].arrival").value("2017-07-29T02:43:16.657"))
+                .andExpect(jsonPath("$.[0].visits.[0].departure").value("2017-07-29T02:43:16.657"));
+
+    }
+
+    @Test
     public void endpointDeviceFindByIdNotFound() throws Exception {
         given(deviceSearch.findById(anyString())).willThrow(new DeviceNotFoundException());
 
         mvc.perform(get(EndPointMapping.DEVICE+"/id/{id}", "1"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("Device Not Found!"));
+
+    }
+
+    @Test
+    public void endpointDeviceFindByUserIdNotFound() throws Exception {
+        given(deviceSearch.findByUserId(anyString())).willThrow(new DeviceNotFoundException());
+
+        mvc.perform(get(EndPointMapping.DEVICE+"/user/{id}", "1"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string("Device Not Found!"));
 

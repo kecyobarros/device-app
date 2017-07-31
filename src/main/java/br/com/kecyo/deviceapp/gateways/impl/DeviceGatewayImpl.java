@@ -26,6 +26,11 @@ public class DeviceGatewayImpl implements DeviceGateway {
     }
 
     @Override
+    public List<Device> findByUserId(final String userId) {
+        return repository.findByUserId(userId);
+    }
+
+    @Override
     public Optional<Device> findById(final String id) {
         log.info("Gateway FindById {}", id);
         return Optional.ofNullable(repository.findOne(id));

@@ -22,6 +22,7 @@ public class ExtractorCSV {
         columns = line.split(";");
         return Device.builder()
                 .id(getValue(TypeColumnCSV.INDEX_DEVICE_ID.getIndex()))
+                .userId(getValue(TypeColumnCSV.INDEX_ID_USER.getIndex()))
                 .systemOS(createSystemOS())
                 .model(getValue(TypeColumnCSV.INDEX_DEVICE_MODEL.getIndex()))
                 .home(createHome())

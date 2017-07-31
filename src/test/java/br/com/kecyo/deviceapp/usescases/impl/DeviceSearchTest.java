@@ -19,18 +19,16 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static br.com.kecyo.deviceapp.utils.asserts.AssertDeviceDataContract.assertDeviceDataContract;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 
 public class DeviceSearchTest {
@@ -87,6 +85,31 @@ public class DeviceSearchTest {
         DeviceDataContract result = deviceSearch.findById("1");
 
         assertDeviceDataContract(result);
+    }
+
+    @Test
+    public void findByUserIdSuccess() throws IOException, URISyntaxException {
+
+        when(deviceGateway.findByUserId(anyString())).thenReturn(Collections
+                .singletonList(Device.builder().build()));
+        when(dataContractConverter.convert(any(Device.class))).thenReturn(createDeviceDataContract());
+
+        List<DeviceDataContract> result = deviceSearch.findByUserId("1");
+
+        assertDeviceDataContract(result.get(0));
+    }
+
+    @Test(expected = DeviceNotFoundException.class)
+    public void findByUserIdIsEmpty() throws IOException, URISyntaxException {
+
+        when(deviceGateway.findByUserId(anyString())).thenReturn(Arrays.asList());
+        when(dataContractConverter.convert(any(Device.class))).thenReturn(createDeviceDataContract());
+        deviceSearch.findByUserId("1");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void findByUserIdParamNotInformed() throws IOException, URISyntaxException {
+        deviceSearch.findByUserId(null);
     }
 
     @Test(expected = IllegalArgumentException.class)

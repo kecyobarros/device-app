@@ -24,6 +24,6 @@ public class ExtractorCSVTest {
                 .map(Optional::get)
                 .collect(Collectors.toList());
 
-        assertThat(list, hasSize(16));
+        assertThat(list, hasSize(17));
     }
 }

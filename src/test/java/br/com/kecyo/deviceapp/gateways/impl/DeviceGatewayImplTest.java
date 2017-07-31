@@ -5,14 +5,16 @@ import br.com.kecyo.deviceapp.gateways.DeviceGateway;
 import br.com.kecyo.deviceapp.gateways.repository.mongo.DeviceRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -32,6 +34,18 @@ public class DeviceGatewayImplTest {
     public void testFindAll(){
         deviceGateway.findAll(1);
         verify(repository, times(1)).findAll(any(Pageable.class));
+    }
+
+    @Test
+    public void testFindByUserIdEmpty(){
+        Mockito.when(repository.findByUserId(anyString())).thenReturn(Collections
+                .singletonList(Device.builder().build()));
+
+
+        List<Device> result = deviceGateway.findByUserId("1");
+
+        verify(repository, times(1)).findByUserId(anyString());
+        assertThat(result, hasSize(1));
     }
 
     @Test
@@ -57,7 +71,7 @@ public class DeviceGatewayImplTest {
     @Test
     public void testSave(){
         deviceGateway.save(Device.builder().build());
-        verify(repository, times(1)).save(Matchers.any(Device.class));
+        verify(repository, times(1)).save(any(Device.class));
     }
 
 }

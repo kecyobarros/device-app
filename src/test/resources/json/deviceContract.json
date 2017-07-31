@@ -4,6 +4,7 @@
     "uber"
   ],
   "model": "Iphone",
+  "userId": "12312312321",
   "home": {
     "longitude": 10,
     "latitude": 20

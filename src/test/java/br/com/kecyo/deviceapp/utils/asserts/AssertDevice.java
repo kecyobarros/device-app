@@ -12,6 +12,7 @@ public class AssertDevice {
     public static void assertDevice(final Device device){
         assertThat(device.getId(), is(nullValue()));
         assertThat(device.getModel(), is(equalTo("Iphone")));
+        assertThat(device.getUserId(), is(equalTo("12312312321")));
         assertSystemOS(device.getSystemOS());
         assertHome(device.getHome());
         assertWork(device.getWork());
